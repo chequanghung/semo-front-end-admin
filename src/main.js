@@ -17,11 +17,16 @@ import VueAxios from 'vue-axios'
 axios.defaults.baseURL = "http://localhost:3003/"
 Vue.use(VueAxios, axios)
 
+// firebase
+import { fb, storage } from './firebase'
+
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
+  fb,
+  storage,
   render: h => h(App)
 }).$mount('#app')

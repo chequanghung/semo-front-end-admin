@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 <template>
   <div id="app">
     <div class="sidebar-page">
@@ -5,44 +7,35 @@
         <b-sidebar
           position="fixed"
           mobile="reduce"
-          expand-on-hover
-          :reduce="true"
-          type="is-light"
-          open
-          can-cancel
           fullheight
+          type="is-light"
+          overlay
+          can-cancel
+          :open.sync="openMenu"
+          @on-cancel="openMenu = false"
+          style="width: fit-content !important;"
         >
           <div class="p-1">
-            <div class="block">
+            <div class="block" style="padding: 24px;">
               <img alt="SEMO" src="./assets/logo.png" />
             </div>
-            <b-menu class="is-custom-mobile">
+            <div class="block">
               <b-menu-list>
-                <b-menu-item :active.sync="isHome" icon="home" label="Trang chủ"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/'" tag="router-link" to='/' label="🏡 Trang chủ"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/fruit'" tag="router-link" to='/fruit' label="🍑 Loại quả"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/product'" tag="router-link" to='/product' label="📦 Sản phẩm"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/auction'" tag="router-link" to='/auction' label="⛏️ Đấu giá"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/affair'" tag="router-link" to='/affair' label="🤝 Giao kèo"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/deposit'" tag="router-link" to='/deposit' label="💵 Giao dịch"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/user'" tag="router-link" to='/user' label="🙋‍♀️ Người dùng"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/identity'" tag="router-link" to='/identity' label="🎫 Xác thực"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/admin'" tag="router-link" to='/admin' label="💁‍♂️ Quản trị viên"></b-menu-item>
+                <b-menu-item :active="this.$route.fullPath === '/you'" tag="router-link" to='/you' label="😊 Tài khoản của bạn"></b-menu-item>
               </b-menu-list>
-              <b-menu-list label="SẢN PHẨM">
-                <b-menu-item :active.sync="isFruit" icon="food-apple" label="Loại quả"></b-menu-item>
-                <b-menu-item :active.sync="isProduct" icon="package-variant" label="Sản phẩm"></b-menu-item>
-                <b-menu-item :active.sync="isAuction" icon="gavel" label="Đấu giá"></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="GIAO DỊCH">
-                <b-menu-item :active.sync="isAffair" icon="handshake" label="Giao kèo"></b-menu-item>
-                <b-menu-item :active.sync="isTransaction" icon="cash" label="Giao dịch"></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="NGƯỜI DÙNG">
-                <b-menu-item :active.sync="isUser" icon="account" label="Người dùng"></b-menu-item>
-                <b-menu-item :active.sync="isIdentity" icon="card-account-details" label="Xác thực"></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="NỘI BỘ">
-                <b-menu-item :active.sync="isAdmin" icon="account" label="Quản trị viên"></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="BẠN">
-                <b-menu-item :active.sync="isProfile" icon="face-profile" label="Tài khoản của bạn"></b-menu-item>
-              </b-menu-list>
-            </b-menu>
+            </div>
           </div>
         </b-sidebar>
-        <div class="view" style="margin-left: 70px;">
+        <div class="view">
           <router-view :key="$route.fullPath" />
         </div>
       </section>
@@ -56,72 +49,30 @@
 
 <script>
 /* eslint-disable */
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "App",
   watch: {
     $route(to, from) {
-      this.path = this.$router.currentRoute.path;
+      this.openMenu ? this.openMenu = false : ''
     },
-    isHome: function () {
-      if (this.isHome) {
-        this.$router.push({ path: "/" });
-        this.isFruit = this.isProduct = this.isAuction = this.isAffair = this.isTransaction = this.isUser = this.isIdentity = this.isAdmin = this.isUser = false;
-      }
+    openMenu: function () {
+      this.openMenu ? this.open_menu() : this.close_menu();
     },
-    isFruit: function () {
-      if (this.isFruit) {
-        this.$router.push({ path: "/fruit" });
-        this.isHome = this.isProduct = this.isAuction = this.isAffair = this.isTransaction = this.isUser = this.isIdentity = this.isAdmin = this.isUser = false;
-      }
-    },
-    isProduct: function () {
-      if (this.isProduct) {
-        this.$router.push({ path: "/product" });
-        this.isHome = this.isFruit = this.isAuction = this.isAffair = this.isTransaction = this.isUser = this.isIdentity = this.isAdmin = this.isUser = false;
-      }
-    },
-    isAuction: function () {
-      if (this.isAuction) {
-        this.$router.push({ path: "/auction" });
-        this.isHome = this.isFruit = this.isProduct = this.isAffair = this.isTransaction = this.isUser = this.isIdentity = this.isAdmin = this.isUser = false;
-      }
-    },
-    isAffair: function () {
-      if (this.isAffair) {
-        this.$router.push({ path: "/affair" });
-      }
-    },
-    isTransaction: function () {
-      if (this.isTransaction) {
-        this.$router.push({ path: "/transaction" });
-      }
-    },
-    isUser: function () {
-      if (this.isUser) {
-        this.$router.push({ path: "/user" });
-      }
-    },
-    isIdentity: function () {
-      if (this.isIdentity) {
-        this.$router.push({ path: "/identity" });
-      }
-    },
-    isAdmin: function () {
-      if (this.isAdmin) {
-        this.$router.push({ path: "/admin" });
-      }
-    },
-    isProfile: function () {
-      if (this.isProfile) {
-        this.$router.push({ path: "/profile" });
-      }
+    menu: function () {
+      this.menu ? this.open_menu() : this.close_menu();
+      this.openMenu = this.menu;
     },
   },
   created() {
+    this.openMenu = this.menu;
+    // this.checkRouterPathForMenuIndex();
   },
   data() {
     return {
-      path: this.$router.currentRoute.path,
+      openMenu: false,
+      index: Number,
       isHome: false,
       isFruit: false,
       isProduct: false,
@@ -133,6 +84,14 @@ export default {
       isAdmin: false,
       isProfile: false,
     };
+  },
+  computed: {
+    ...mapState({
+      menu: (state) => state.ui.menu,
+    }),
+  },
+  methods: {
+    ...mapActions("ui", ["open_menu", "close_menu"]),
   },
 };
 </script>
@@ -166,12 +125,16 @@ export default {
   padding: 40px;
 }
 
-.p-1 {
-  padding: 1em;
+.p-1 img {
+  width: 180px;
+}
+
+.b-sidebar .sidebar-content {
+  width: fit-content !important;
 }
 
 .view {
-  width: calc(100% - 70px);
+  width: 100%;
 }
 
 .sidebar-page {
@@ -248,6 +211,10 @@ export default {
       }
     }
   }
+}
+
+.tab-content {
+  padding: 0 !important;
 }
 
 $primary: #01d28e;

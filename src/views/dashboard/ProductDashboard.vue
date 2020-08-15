@@ -2,18 +2,15 @@
   <div class="page-container">
     <dashboard
       title="📦 Sản phẩm"
-      new_title="➕ Thêm quả mới"
-      :data="fruits"
+      :data="products"
       :columns="columns"
-      :total="fruits.length"
-      searchable
-      @add="addFruit"
-      @delete="deleteFruit"
-      @into="intoFruit"
+      :total="products.length"
+      @delete="deleteProduct"
+      @into="intoProduct"
     ></dashboard>
 
     <!-- modals -->
-    <b-modal :active.sync="isModal" trap-focus destroy-on-hide can-cancel>
+    <b-modal :active.sync="isModal" trap-focus destroy-on-hide can-cancel style="width: auto">
       <fruit-modal
         class="casual-mordal"
         has-modal-card
@@ -35,50 +32,58 @@ export default {
   },
   data() {
     return {
-      // data: fruits,
       columns: [
         {
-          field: "id",
-          label: "Mã",
+          field: "title",
+          label: "TÊN SẢN PHẨM",
+          searchable: true
         },
-        // {
-        //   field: "title",
-        //   label: "TÊN LOẠI QUẢ",
-        // },
-        // {
-        //   field: "product_count",
-        //   label: "SỐ SẢN PHẨM",
-        // },
-        // {
-        //   field: "date_created",
-        //   label: "THỜI GIAN TẠO",
-        // },
+        {
+          field: "fruit_title",
+          label: "TÊN LOẠI QUẢ",
+          searchable: true
+        },
+        {
+          field: "user_name",
+          label: "TÊN NGƯỜI DÙNG",
+          searchable: true
+        },
+        {
+          field: "date_created",
+          label: "THỜI GIAN ĐĂNG",
+        },
+        {
+          field: "product_status",
+          label: "TRẠNG THÁI",
+          searchable: true
+        },
       ],
       total: 0,
       selected: {},
       isModal: false,
     };
   },
-  created() {
-    this.populate();
+  mounted() {
+    // setInterval(() => {
+      this.populates();
+    // }, 15000)
   },
   computed: {
     ...mapState({
-      fruits: (state) => state.fruit.fruits,
+      products: (state) => state.product.products,
     }),
   },
   methods: {
-    ...mapActions("fruit", ["populate", "add", "edit", "delete"]),
+    ...mapActions("product", ["populates", "review"]),
     // fetch data
-    addFruit() {
+    addProduct() {
       alert("add");
     },
-    deleteFruit(rows) {
+    deleteProduct(rows) {
       this.delete(rows);
     },
-    intoFruit(row) {
-      this.isModal = true;
-      this.selected = row;
+    intoProduct(row) {
+        this.$router.push({ name: 'ProductReview', params: { id: row.id } })
     },
   },
 };

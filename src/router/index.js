@@ -13,11 +13,21 @@ Vue.use(VueRouter)
   {
     path: '/fruit',
     component: () => import('../views/dashboard/FruitDashboard')
+  },
+  {
+    path: '/product',
+    component: () => import('../views/dashboard/ProductDashboard')
+  },
+  {
+    path: '/product/:id',
+    name: 'ProductReview',
+    props: true,
+    component: () => import('../views/ProductReview')
   }
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
 })
 
 export default router

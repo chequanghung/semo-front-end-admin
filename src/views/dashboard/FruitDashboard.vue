@@ -6,19 +6,29 @@
       :data="fruits"
       :columns="columns"
       :total="fruits.length"
-      searchable
       @add="addFruit"
       @delete="deleteFruit"
       @into="intoFruit"
     ></dashboard>
 
     <!-- modals -->
-    <b-modal :active.sync="isModal" trap-focus destroy-on-hide can-cancel>
+    <!-- new modal -->
+    <b-modal :active.sync="isNewModal" trap-focus destroy-on-hide can-cancel style="width: auto">
+      <fruit-modal
+        class="casual-mordal"
+        has-modal-card
+        title="➕ Thêm quả mới"
+        @close="isNewModal = false"
+      ></fruit-modal>
+    </b-modal>
+    <!-- edit modal -->
+    <b-modal :active.sync="isEditModal" trap-focus destroy-on-hide can-cancel style="width: auto">
       <fruit-modal
         class="casual-mordal"
         has-modal-card
         title="🖊️ Chỉnh sửa loại quả"
         :data="selected"
+        @close="isEditModal = false"
       ></fruit-modal>
     </b-modal>
   </div>
@@ -40,14 +50,20 @@ export default {
         {
           field: "id",
           label: "Mã",
+          width: "60",
+          searchable: true,
+          sortable: true,
         },
         {
           field: "title",
           label: "TÊN LOẠI QUẢ",
+          searchable: true,
+          sortable: true,
         },
         {
           field: "product_count",
           label: "SỐ SẢN PHẨM",
+          sortable: true,
         },
         {
           field: "date_created",
@@ -56,7 +72,8 @@ export default {
       ],
       total: 0,
       selected: {},
-      isModal: false,
+      isEditModal: false,
+      isNewModal: false,
     };
   },
   created() {
@@ -68,16 +85,18 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("fruit", ["populate", "add", "edit", "delete"]),
+    ...mapActions("fruit", ["populate", "add", "delete"]),
     // fetch data
     addFruit() {
-      alert("add");
+      this.isNewModal = true;
     },
     deleteFruit(rows) {
-      this.delete(rows);
+      // get empty fruits to delete
+      // delete
+      this.delete(rows); // delete fruits
     },
     intoFruit(row) {
-      this.isModal = true;
+      this.isEditModal = true;
       this.selected = row;
     },
   },
