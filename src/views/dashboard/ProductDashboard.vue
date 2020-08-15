@@ -2,6 +2,7 @@
   <div class="page-container">
     <dashboard
       title="📦 Sản phẩm"
+      del_title="🗑️ Xóa bản ghi"
       :data="products"
       :columns="columns"
       :total="products.length"
@@ -74,11 +75,8 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("product", ["populates", "review"]),
+    ...mapActions("product", ["populates", "review", "delete"]),
     // fetch data
-    addProduct() {
-      alert("add");
-    },
     deleteProduct(rows) {
       this.delete(rows);
     },

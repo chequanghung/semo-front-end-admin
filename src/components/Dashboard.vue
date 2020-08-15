@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
     <!-- title -->
-    <div class="columns title-bar">
-      <div class="column is-narrow">
-        <b-button @click="showMenu">📂</b-button>
+    <div class="columns title-bar is-vcentered">
+      <div class="column is-narrow" style="padding: 20px;">
+        <b-button @click="showMenu" icon-left="menu" type="is-primary"></b-button>
       </div>
       <div class="column">
         <p class="dashboard-title">{{title}}</p>
@@ -20,7 +20,7 @@
             </p>
           </div>
           <div class="column">
-            <b-button type="is-danger" @click="deleteRows">🗑️ Xóa bản ghi</b-button>
+            <b-button type="is-danger" @click="deleteRows">{{ del_title }}</b-button>
           </div>
           <div class="column">
             <b-button type="is-light" @click="checkedRows = []">❌ Bỏ chọn</b-button>
@@ -54,7 +54,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: ["title", "new_title", "data", "columns", "total"],
+  props: ["title", "del_title", "new_title", "data", "columns", "total"],
   data() {
     return {
       checkedRows: [],
@@ -98,7 +98,6 @@ export default {
   font-family: "Roboto";
   font-weight: 900;
   color: #01d28e;
-  padding-bottom: 10px;
 }
 
 .title-bar {

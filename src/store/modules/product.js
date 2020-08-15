@@ -54,13 +54,12 @@ export default {
                 })
         },
         // edit product from products
-        edits(state, product) {
-            state.products = state.products.map(item => item.id === product.id ? product : item)
-            console.log(state.products)
+        edit(state, id) {
+            state.products = state.products.map(item => item.id === product.id ? { ...product, product_status: 2 } : item)
         },
         // delete product from products
-        deletes(state, product) {
-            state.products = state.products.filter(item => item.id != product.id)
+        deletes(state, products) {
+            state.products = state.products.filter(item => products.indexOf(item) < 0)
         },
         // get product
         get(state, product) {
@@ -92,56 +91,112 @@ export default {
             })
         },
         // review product
-        async review({ commit }, { review, media }) {
-            // seperate media into an array
-            // review media
-
-
+        review: async ({ commit, dispatch }, { review, media }) => {
             // if media review is completed
-            await Promise.all(reviewMedia)
-                .then(() => {
-                    axios.post('/admin/reviewProduct', review)
-                        .then(response => {
-                            console.log(review)
-                            commit('edits', response.data)
-                            // successful
-                            Notification.open({
-                                message: `Phê duyệt thành công.`,
-                                type: 'is-success'
-                            })
+            await dispatch('reviewMedia', media).then(() => {
+                axios.post('/admin/reviewProduct', review)
+                    .then(response => {
+                        // successful
+                        Notification.open({
+                            message: `${response.data.message}`,
+                            type: 'is-success'
                         })
-                        .catch(error => {
-                            // error box
-                            Notification.open({
-                                message: `Không thể phê duyệt sản phẩm vì ${error.response.data.message}.`,
-                                type: 'is-danger'
-                            })
+                        commit('edits', review.id)
+                        router.go(-1)
+                    })
+                    .catch(error => {
+                        // error box
+                        Notification.open({
+                            message: `Không thể phê duyệt sản phẩm vì ${error.response.data.message}.`,
+                            type: 'is-danger'
                         })
-                        .then(() => {
-                            router.go(-1)
-                        })
-                })
-
+                    })
+            })
+            // await Promise.all(reviewMedia)
+            //     .then(() => {
+            //     })
         },
         // review media
-        async reviewMedia({ commit }, media) {
+        reviewMedia: async ({ commit }, media) => {
             let reviewMedia = []
 
-            for (const item of media) {
-                reviewMedia.push(
-                    axios.post('/admin/reviewMedia', item)
-                        .then(() => {
-                            console.log('succeed')
+            await Promise.all(media.map(item => {
+                axios.post('/admin/reviewMedia', item)
+                    .then(() => {
+                        reviewMedia.push(item)
+                        // console.log('succeed')
+                    })
+                    .catch(error => {
+                        Notification.open({
+                            message: `Không phê duyệt được ảnh vì ${error.response.data.message}`,
+                            type: 'is-danger'
                         })
-                        .catch(error => {
-                            console.log('no')
-                            Notification.open({
-                                message: `Không phê duyệt được ảnh vì ${error.response.data.message}`,
-                                type: 'is-danger'
-                            })
-                        })
-                )
+                    })
+            }))
+
+            return reviewMedia
+        },
+        delete: async ({ commit, dispatch }, products) => {
+            // seperate products by status
+            // products cant be deleted
+            let invalid = []
+            // products can be deleted
+            let valid = []
+
+            // seperate
+            products.forEach(product => {
+                if (product.product_status.indexOf('CẦN CHỈNH SỬA') >= 0
+                    || product.product_status.indexOf('CHỜ KIỂM DUYỆT') >= 0
+                    || product.product_status.indexOf('ĐÃ KIỂM DUYỆT') >= 0) {
+                    valid = [...valid, product]
+                    // axios.delete(`/product/${product.id}`)
+                    //     .then(() => {
+                    //         commit('deletes', product)
+                    //     })
+                    //     .catch(error => {
+
+                    //     })
+                } else {
+                    invalid = [...invalid, product.title]
+                }
+            })
+
+            // display error message for invalid fruits
+            if (invalid.length > 0) {
+                Notification.open({
+                    message: `Không thể xóa các sản phẩm đã lên sàn`,
+                    type: 'is-danger'
+                })
             }
+
+            await dispatch('deleteProducts', valid)
+                .then(() => {
+                    commit('deletes', valid)
+                    // succeed
+                    Notification.open({
+                        type: 'is-success',
+                        message: `Đã xóa thành công ${valid.length} sản phẩm.`
+                    })
+                })
+        },
+        deleteProducts: async ({ commit }, products) => {
+            let deletedProducts = []
+
+            await Promise.all(products.map(product => {
+                axios.delete(`/product/${product.id}`)
+                    .then(() => {
+                        deletedProducts.push(product)
+                    })
+                    .catch(error => {
+                        Notification.open({
+                            type: 'is-danger',
+                            message: `Lỗi kết nối. Hãy kiểm tra đường truyền mạng nhé.`
+                        })
+                    })
+
+            }))
+
+            return deletedProducts
         },
         // close page
         close({ commit }) {

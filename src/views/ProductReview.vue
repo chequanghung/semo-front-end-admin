@@ -1,8 +1,8 @@
 <template>
   <div class="page-container">
     <div class="title-bar">
-      <div class="columns">
-        <div class="column is-narrow">
+      <div class="columns is-vcentered">
+        <div class="column is-2">
           <b-button type="is-danger" @click="cancel" outlined>❌ Hủy</b-button>
         </div>
         <div class="column">
@@ -11,6 +11,7 @@
             <p class="review-title">Kiểm duyệt sản phẩm</p>
           </div>
         </div>
+        <div class="column is-2"></div>
       </div>
     </div>
 
@@ -42,14 +43,17 @@
             <div>
               <p class="page-subtitle">Thông tin chung về sản phẩm</p>
               <!-- title -->
-              <div class="page-section">
+              <div class="page-section" v-if="this.product.Fruit !== null">
                 <p class="page-content-text title" :class="{'edited' : edit_fruit}">Loại quả</p>
                 <!-- answer -->
                 <div class="page-answer">
                   <div class="columns is-vcentered">
                     <div class="column is-narrow" v-if="this.product.Fruit.icon_url !== ''">
                       <figure class="image is-48x48">
-                        <img class="is-rounded" :src="this.product.Fruit.icon_url" />
+                        <img
+                          class="is-rounded"
+                          :src="this.product.Fruit.icon_url ? this.product.Fruit.icon_url : '../assets/Placeholder-Icon.png'"
+                        />
                       </figure>
                     </div>
                     <div class="column">
@@ -274,7 +278,9 @@
                 >Giá khởi điểm</p>
                 <!-- answer -->
                 <div class="page-answer">
-                  <p class="page-content-text">{{ this.product.price_init }}đ</p>
+                  <p
+                    class="page-content-text"
+                  >{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.product.price_init) }}</p>
                 </div>
                 <!-- commenter -->
                 <br />
@@ -292,7 +298,9 @@
                 <p class="page-content-text title" :class="{'edited' : edit_price_step}">Bước giá</p>
                 <!-- answer -->
                 <div class="page-answer">
-                  <p class="page-content-text">{{ this.product.price_step }}đ</p>
+                  <p
+                    class="page-content-text"
+                  >{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.product.price_step) }}</p>
                 </div>
                 <!-- commenter -->
                 <br />
@@ -397,10 +405,11 @@ export default {
         notes: this.edit_notes || null,
       };
 
-      let media = this.edit_media.map(item => item.notes.length === 0 ? {...item, notes: null} : item)
+      let media = this.edit_media.map((item) =>
+        item.notes.length === 0 ? { ...item, notes: null } : item
+      );
 
       this.review({ review, media });
-      this.$router.go(-1);
     },
   },
 };

@@ -20,9 +20,12 @@ Vue.use(VueRouter)
   },
   {
     path: '/product/:id',
-    name: 'ProductReview',
     props: true,
     component: () => import('../views/ProductReview')
+  },
+  {
+    path: '/auction',
+    component: () => import('../views/dashboard/AuctionDashboard')
   }
 ]
 
