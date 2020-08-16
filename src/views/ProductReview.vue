@@ -364,8 +364,6 @@ export default {
   },
   created() {
     this.get(this.id);
-    console.log(this.product.Fruit.icon_url);
-    console.log(this.product.notes);
   },
   watch: {
     product: function () {

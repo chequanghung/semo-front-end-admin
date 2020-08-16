@@ -71,7 +71,6 @@ export default {
           label: "THỜI GIAN TẠO",
         },
       ],
-      total: 0,
       selected: {},
       isEditModal: false,
       isNewModal: false,

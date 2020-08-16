@@ -2,17 +2,19 @@
   <div class="page-container">
     <dashboard
       title="⛏️ Đấu giá"
-      del_title="🔒 Đóng phiên"
+      del_title="🗑️ Xóa bản ghi"
       :data="auctions"
       :columns="columns"
       :total="auctions.length"
-      @delete="lockAuction"
+      @delete="deleteAuction"
       @into="intoAuction"
     ></dashboard>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   components: {
     Dashboard: () => import("../../components/Dashboard"),
@@ -39,7 +41,27 @@ export default {
           searchable: true,
         },
       ],
+      selected: [],
     };
+  },
+  created() {
+    this.populate();
+  },
+  computed: {
+    ...mapState({
+      auctions: (state) => state.auction.auctions,
+    }),
+  },
+  methods: {
+    ...mapActions("auction", ["populate", "deletea", "populatea"]),
+
+    deleteAuction(rows) {
+      this.deletea(rows);
+    },
+
+    intoAuction(row) {
+      this.populatea(row);
+    },
   },
 };
 </script>

@@ -102,6 +102,7 @@ export default {
                             type: 'is-success'
                         })
                         commit('edits', review.id)
+                        commit('close')
                         router.go(-1)
                     })
                     .catch(error => {
@@ -193,7 +194,6 @@ export default {
                             message: `Lỗi kết nối. Hãy kiểm tra đường truyền mạng nhé.`
                         })
                     })
-
             }))
 
             return deletedProducts
