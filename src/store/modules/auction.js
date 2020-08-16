@@ -29,7 +29,6 @@ export default {
                 .map(auction => auction.id
                     ? { ...auction, date_closure: moment(auction.date_closure).format('hh:mm DD/MM/YYYY') }
                     : auction)
-                .map(auction => auction.price_cur = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(auction.price_cur))
                 .map(auction => {
                     switch (auction.auction_status) {
                         case 0:
@@ -42,6 +41,8 @@ export default {
                             return { ...auction, auction_status: '🗑️ ĐÃ XÓA' }
                     }
                 })
+                .map(auction => { return { ...auction, price_cur: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(auction.price_cur) } })
+            console.log(state.auctions)
         },
         // get auction
         geta(state, auction) {

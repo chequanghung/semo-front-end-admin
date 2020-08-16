@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-container">
     <!-- title -->
-    <div class="columns title-bar is-vcentered">
-      <div class="column is-narrow" style="padding: 20px;">
+    <div class="columns title-bar is-vcentered is-mobile">
+      <div class="column is-narrow" style="padding: 20px;" v-if="is_view">
         <b-button @click="showMenu" icon-left="menu" type="is-primary"></b-button>
       </div>
       <div class="column">
@@ -54,7 +54,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: ["title", "del_title", "new_title", "data", "columns", "total"],
+  props: ["is_view", "title", "del_title", "new_title", "data", "columns", "total"],
   data() {
     return {
       checkedRows: [],

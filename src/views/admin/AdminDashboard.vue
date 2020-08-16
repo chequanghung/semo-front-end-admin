@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <dashboard
+      :is_view="true"
       title="⛏️ Đấu giá"
       del_title="🗑️ Xóa bản ghi"
       :data="auctions"
@@ -30,6 +31,7 @@ export default {
         {
           field: "price_cur",
           label: "GIÁ HIỆN TẠI",
+          sortable: true,
         },
         {
           field: "date_closure",
@@ -39,6 +41,7 @@ export default {
           field: "auction_status",
           label: "TRẠNG THÁI",
           searchable: true,
+          sortable: true,
         },
       ],
       selected: [],

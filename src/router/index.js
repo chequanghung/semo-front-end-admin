@@ -12,21 +12,47 @@ Vue.use(VueRouter)
   },
   {
     path: '/fruit',
-    component: () => import('../views/dashboard/FruitDashboard')
+    component: () => import('../views/fruit/FruitDashboard')
   },
   {
     path: '/product',
-    component: () => import('../views/dashboard/ProductDashboard')
+    component: () => import('../views/product/ProductDashboard')
   },
   {
     path: '/product/:id',
     name: 'ProductReview',
     props: true,
-    component: () => import('../views/ProductReview')
+    component: () => import('../views/product/review/ProductReview')
   },
   {
     path: '/auction',
-    component: () => import('../views/dashboard/AuctionDashboard')
+    component: () => import('../views/auction/AuctionDashboard')
+  },
+  {
+    path: '/auction/:id',
+    name: 'AuctionView',
+    props: true,
+    component: () => import('../views/auction/view/AuctionView')
+  },
+  {
+    path: '/affair',
+    component: () => import('../views/affair/AffairDashboard')
+  },
+  {
+    path: '/deposit',
+    component: () => import('../views/deposit/DepositDashboard')
+  },
+  {
+    path: '/user',
+    component: () => import('../views/user/UserDashboard')
+  },
+  {
+    path: '/identity',
+    component: () => import('../views/identity/IdentityDashboard')
+  },
+  {
+    path: '/admin',
+    component: () => import('../views/admin/AdminDashboard')
   }
 ]
 

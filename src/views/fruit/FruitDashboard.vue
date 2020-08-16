@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <dashboard
+      :is_view="true"
       title="🍑 Loại quả"
       del_title="🗑️ Xóa bản ghi"
       new_title="➕ Thêm quả mới"
@@ -50,7 +51,7 @@ export default {
       columns: [
         {
           field: "id",
-          label: "Mã",
+          label: "MÃ",
           width: "60",
           searchable: true,
           sortable: true,

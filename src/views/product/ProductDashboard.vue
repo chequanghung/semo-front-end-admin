@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <dashboard
+      :is_view="true"
       title="📦 Sản phẩm"
       del_title="🗑️ Xóa bản ghi"
       :data="products"
@@ -37,17 +38,19 @@ export default {
         {
           field: "title",
           label: "TÊN SẢN PHẨM",
-          searchable: true
+          searchable: true,
+          sortable: true,
         },
         {
           field: "fruit_title",
           label: "TÊN LOẠI QUẢ",
-          searchable: true
+          searchable: true,
+          sortable: true,
         },
         {
           field: "user_name",
           label: "TÊN NGƯỜI DÙNG",
-          searchable: true
+          searchable: true,
         },
         {
           field: "date_created",
@@ -56,7 +59,8 @@ export default {
         {
           field: "product_status",
           label: "TRẠNG THÁI",
-          searchable: true
+          searchable: true,
+          sortable: true,
         },
       ],
       total: 0,

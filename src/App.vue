@@ -21,32 +21,84 @@
             </div>
             <div class="block">
               <b-menu-list>
-                <b-menu-item :active="this.$route.fullPath === '/'" tag="router-link" to='/' label="🏡 Trang chủ"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/'"
+                  tag="router-link"
+                  to="/"
+                  label="🏡 Trang chủ"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="SẢN PHẨM">
-                <b-menu-item :active="this.$route.fullPath === '/fruit'" tag="router-link" to='/fruit' label="🍑 Loại quả"></b-menu-item>
-                <b-menu-item :active="this.$route.fullPath === '/product'" tag="router-link" to='/product' label="📦 Sản phẩm"></b-menu-item>
-                <b-menu-item :active="this.$route.fullPath === '/auction'" tag="router-link" to='/auction' label="⛏️ Đấu giá"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/fruit'"
+                  tag="router-link"
+                  to="/fruit"
+                  label="🍑 Loại quả"
+                ></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/product'"
+                  tag="router-link"
+                  to="/product"
+                  label="📦 Sản phẩm"
+                ></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/auction'"
+                  tag="router-link"
+                  to="/auction"
+                  label="⛏️ Đấu giá"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="KINH DOANH">
-                <b-menu-item :active="this.$route.fullPath === '/affair'" tag="router-link" to='/affair' label="🤝 Giao kèo"></b-menu-item>
-                <b-menu-item :active="this.$route.fullPath === '/deposit'" tag="router-link" to='/deposit' label="💵 Giao dịch"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/affair'"
+                  tag="router-link"
+                  to="/affair"
+                  label="🤝 Giao kèo"
+                ></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/deposit'"
+                  tag="router-link"
+                  to="/deposit"
+                  label="💵 Giao dịch"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="NGƯỜI DÙNG">
-                <b-menu-item :active="this.$route.fullPath === '/user'" tag="router-link" to='/user' label="🙋‍♀️ Người dùng"></b-menu-item>
-                <b-menu-item :active="this.$route.fullPath === '/identity'" tag="router-link" to='/identity' label="🎫 Xác thực"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/user'"
+                  tag="router-link"
+                  to="/user"
+                  label="🙋‍♀️ Người dùng"
+                ></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/identity'"
+                  tag="router-link"
+                  to="/identity"
+                  label="🎫 Xác thực"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="NỘI BỘ">
-                <b-menu-item :active="this.$route.fullPath === '/admin'" tag="router-link" to='/admin' label="💁‍♂️ Quản trị viên"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/admin'"
+                  tag="router-link"
+                  to="/admin"
+                  label="💁‍♂️ Quản trị viên"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="BẠN">
-                <b-menu-item :active="this.$route.fullPath === '/you'" tag="router-link" to='/you' label="😊 Tài khoản của bạn"></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/you'"
+                  tag="router-link"
+                  to="/you"
+                  label="😊 Tài khoản của bạn"
+                ></b-menu-item>
               </b-menu-list>
             </div>
           </div>
         </b-sidebar>
         <div class="view">
-          <router-view :key="$route.fullPath" />
+          <transition name="router-view-transition">
+            <router-view :key="$route.fullPath" />
+          </transition>
         </div>
       </section>
     </div>
@@ -65,7 +117,7 @@ export default {
   name: "App",
   watch: {
     $route(to, from) {
-      this.openMenu ? this.openMenu = false : ''
+      this.openMenu ? (this.openMenu = false) : "";
     },
     openMenu: function () {
       this.openMenu ? this.open_menu() : this.close_menu();
@@ -145,11 +197,14 @@ export default {
 
 .view {
   width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 .menu-label {
   padding-left: 10px;
 }
+//
 .sidebar-page {
   display: flex;
   flex-direction: column;
@@ -163,6 +218,7 @@ export default {
     // min-height: 100vh;
   }
 }
+// sidebar theme
 @media screen and (max-width: 1023px) {
   .b-sidebar {
     .sidebar-content {
@@ -228,6 +284,33 @@ export default {
 
 .tab-content {
   padding: 0 !important;
+}
+
+// animation for views
+.router-view-transition-enter-active {
+  animation: fadeIn 0.25s ease-in;
+}
+
+@keyframes fadeIn {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.router-view-transition-leave-active {
+  animation: fadeOut 0.125s ease-in;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 $primary: #01d28e;
