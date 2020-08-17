@@ -2,6 +2,7 @@
   <div class="page-container">
     <dashboard
       :is_view="true"
+      :checkable="true"
       title="⛏️ Đấu giá"
       del_title="🗑️ Xóa bản ghi"
       :data="auctions"
@@ -56,14 +57,14 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("auction", ["populate", "deletea", "populatea"]),
+    ...mapActions("auction", ["populate", "deletea"]),
 
     deleteAuction(rows) {
       this.deletea(rows);
     },
 
     intoAuction(row) {
-      this.populatea(row);
+      this.$router.push({ name: "AuctionView", params: { id: row.id } });
     },
   },
 };

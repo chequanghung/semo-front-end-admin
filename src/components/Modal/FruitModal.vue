@@ -19,13 +19,14 @@
           <!-- firebase image uploader -->
           <div class="column is-narrow">
             <b-upload
+              type="is-green"
               drag-drop
               :disabled="isDisabled"
               v-model="file"
               accept="image/*"
               @input="upload"
             >
-              <a class="button is-primary">
+              <a class="button is-green">
                 <span>📱 Chọn ảnh và phim trong máy</span>
               </a>
             </b-upload>
@@ -39,10 +40,18 @@
     <div class="modal-submit">
       <div class="columns is-centered">
         <div class="column is-narrow" v-if="data === undefined">
-          <b-button type="is-primary" :disabled="this.fruit_title === '' && this.fruit_icon_url === ''" @click="addFruit">💾 Lưu mới</b-button>
+          <b-button
+            type="is-green"
+            :disabled="this.fruit_title === '' && this.fruit_icon_url === ''"
+            @click="addFruit"
+          >💾 Lưu mới</b-button>
         </div>
         <div class="column is-narrow" v-if="data !== undefined">
-          <b-button type="is-primary" :disabled="this.data.title === this.fruit_title && this.data.icon_url === this.fruit_icon_url" @click="editFruit">💾 Lưu lại</b-button>
+          <b-button
+            type="is-green"
+            :disabled="this.data.title === this.fruit_title && this.data.icon_url === this.fruit_icon_url"
+            @click="editFruit"
+          >💾 Lưu lại</b-button>
         </div>
         <div class="column is-narrow" v-if="data !== undefined && data.product_count == 0">
           <b-button type="is-danger" @click="deleteFruit">🗑️ Xóa bỏ</b-button>
@@ -82,7 +91,7 @@ export default {
       fruits: (state) => state.fruit.fruits,
       img_dir: (state) => state.fruit.img_dir,
     }),
-    submitReq () {
+    submitReq() {
       // create modal
       if (this.data === undefined) {
         if ((this.fruit_title = this.fruit_icon_url === "")) {
@@ -192,7 +201,7 @@ export default {
           id: this.data.id,
           title: this.fruit_title,
           icon_url: this.fruit_icon_url,
-          product_count: this.data.product_count
+          product_count: this.data.product_count,
         },
       ]);
 

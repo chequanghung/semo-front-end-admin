@@ -3,13 +3,13 @@
     <!-- title -->
     <div class="columns title-bar is-vcentered is-mobile">
       <div class="column is-narrow" style="padding: 20px;" v-if="is_view">
-        <b-button @click="showMenu" icon-left="menu" type="is-primary"></b-button>
+        <b-button @click="showMenu" icon-left="menu" type="is-green"></b-button>
       </div>
       <div class="column">
         <p class="dashboard-title">{{title}}</p>
       </div>
       <div class="column is-narrow" v-if="checkedRows.length === 0">
-        <b-button type="is-primary" v-if="new_title !== undefined" @click="addRow">{{new_title}}</b-button>
+        <b-button type="is-green" v-if="new_title !== undefined" @click="addRow">{{new_title}}</b-button>
       </div>
       <div class="column is-narrow" v-if="checkedRows.length > 0">
         <div class="columns is-mobile is-vcentered is-variable is-1">
@@ -42,7 +42,7 @@
         pagination-simple
         pagination-position="bottom"
         checkbox-position="right"
-        checkable
+        :checkable="checkable"
         hoverable
         :focusable="false"
       ></b-table>
@@ -54,7 +54,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: ["is_view", "title", "del_title", "new_title", "data", "columns", "total"],
+  props: ["is_view", "checkable", "title", "del_title", "new_title", "data", "columns", "total"],
   data() {
     return {
       checkedRows: [],
@@ -104,7 +104,8 @@ export default {
   position: sticky;
   top: 0px;
   z-index: 1;
-  background-color: #ffffff;
+  background-color: #fcfcfc89;
+  backdrop-filter: saturate(180%) blur(20px);
   transition: 0.12s;
 }
 </style>

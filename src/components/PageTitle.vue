@@ -2,7 +2,7 @@
   <div class="bar-container">
     <div class="columns title-bar is-vcentered is-mobile">
       <div class="column is-narrow" style="padding: 20px;">
-        <b-button @click="showMenu" icon-left="menu" type="is-primary"></b-button>
+        <b-button @click="showMenu" icon-left="menu" type="is-green"></b-button>
       </div>
       <div class="column">
         <p class="dashboard-title">{{ title }}</p>
@@ -46,7 +46,8 @@ export default {
   position: sticky;
   top: 0px;
   z-index: 1;
-  background-color: #ffffff;
+  background-color: #fcfcfc89;
+  /* backdrop-filter: saturate(180%) blur(20px); */
   transition: 0.12s;
 }
 </style>

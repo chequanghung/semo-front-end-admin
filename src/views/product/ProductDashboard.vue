@@ -2,6 +2,7 @@
   <div class="page-container">
     <dashboard
       :is_view="true"
+      :checkable="true"
       title="📦 Sản phẩm"
       del_title="🗑️ Xóa bản ghi"
       :data="products"
@@ -70,7 +71,7 @@ export default {
   },
   mounted() {
     // setInterval(() => {
-      this.populates();
+    this.populates();
     // }, 15000)
   },
   computed: {
@@ -85,7 +86,7 @@ export default {
       this.delete(rows);
     },
     intoProduct(row) {
-        this.$router.push({ name: 'ProductReview', params: { id: row.id } })
+      this.$router.push({ name: "ProductReview", params: { id: row.id } });
     },
   },
 };

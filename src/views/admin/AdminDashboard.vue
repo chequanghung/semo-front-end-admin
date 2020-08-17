@@ -2,6 +2,7 @@
   <div class="page-container">
     <dashboard
       :is_view="true"
+      :checkable="true"
       title="⛏️ Đấu giá"
       del_title="🗑️ Xóa bản ghi"
       :data="auctions"

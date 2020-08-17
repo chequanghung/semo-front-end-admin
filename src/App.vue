@@ -8,7 +8,7 @@
           position="fixed"
           mobile="reduce"
           fullheight
-          type="is-light"
+          type="is-green"
           overlay
           can-cancel
           :open.sync="openMenu"
@@ -199,6 +199,7 @@ export default {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
+  background-color: #fcfcfc;
 }
 
 .menu-label {
@@ -313,17 +314,41 @@ export default {
   }
 }
 
+// scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #70707024;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #01d28e;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #01d28e;
+}
+
 $primary: #01d28e;
 $primary-invert: findColorInvert($primary);
 $primary-purple: #b88cd8;
 $twitter: #4099ff;
 $twitter-invert: findColorInvert($twitter);
+$menu-item-active-background-color: #01d28e;
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
   "green": (
     $primary,
-    $primary-purple,
+    $white,
   ),
   "white": (
     $white,

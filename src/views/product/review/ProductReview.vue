@@ -42,7 +42,7 @@
           <div class="column is-two-thirds">
             <p class="page-subtitle">Thông tin chung về sản phẩm</p>
             <!-- title -->
-            <div class="page-section" v-if="this.product.Fruit !== null">
+            <div class="page-section" v-if="this.product.Fruit !== undefined">
               <p class="page-content-text title" :class="{'edited' : edit_fruit}">Loại quả</p>
               <!-- answer -->
               <div class="page-answer">
@@ -80,7 +80,7 @@
               </b-field>
             </div>
             <!-- weight -->
-            <div class="page-section">
+            <div class="page-section" v-if="this.product.Address !== undefined">
               <p
                 class="page-content-text title"
                 :class="{'edited' : edit_address}"
@@ -205,7 +205,7 @@
 
           <!-- images -->
           <div class="column is-two-thirds">
-            <div v-if="this.product.ProductMedia.length > 0">
+            <div v-if="this.product.ProductMedia !== undefined">
               <p class="page-subtitle">Sản phẩm của bạn trông thế nào?</p>
               <!-- title -->
               <div class="page-section">
@@ -287,7 +287,7 @@
             <div class="page-section">
               <div class="columns is-centered">
                 <b-button
-                  type="is-primary"
+                  type="is-green"
                   size="is-medium"
                   native-type="submit"
                   rounded
@@ -308,12 +308,6 @@ export default {
   props: ["id"],
   data() {
     return {
-      // input type
-      danger: "is-danger",
-      normal: "is-primary",
-      // address: this.product.Address,
-      // media: this.product.ProductMedia,
-      // fruit
       edit_fruit: "",
       edit_weight: "",
       edit_address: "",
@@ -394,7 +388,8 @@ export default {
   position: sticky;
   top: 0px;
   z-index: 1;
-  background-color: #ffffff;
+  background-color: #fcfcfc89;
+  backdrop-filter: saturate(180%) blur(20px);
   transition: 0.12s;
   padding: 20px 0;
 }

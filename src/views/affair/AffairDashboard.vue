@@ -2,7 +2,8 @@
   <div class="page-container">
     <dashboard
       :is_view="true"
-      title="⛏️ Đấu giá"
+      :checkable="true"
+      title="🤝 Giao kèo"
       del_title="🗑️ Xóa bản ghi"
       :data="auctions"
       :columns="columns"
@@ -24,24 +25,32 @@ export default {
     return {
       columns: [
         {
-          field: "product_title",
-          label: "SẢN PHẨM",
+          field: "id",
+          label: "TÊN SẢN PHẨM",
           searchable: true,
+          sortable: true,
         },
         {
           field: "price_cur",
-          label: "GIÁ HIỆN TẠI",
+          label: "NGƯỜI BÁN",
+          searchable: true,
           sortable: true,
         },
         {
           field: "date_closure",
-          label: "THỜI GIAN ĐÓNG",
+          label: "NGƯỜI MUA",
+          searchable: true,
         },
         {
           field: "auction_status",
           label: "TRẠNG THÁI",
           searchable: true,
           sortable: true,
+        },
+        {
+          field: "auction_status",
+          label: "CẬP NHẬT CUỐI",
+          searchable: true,
         },
       ],
       selected: [],
