@@ -3,20 +3,21 @@
     <div class="columns">
       <div class="column is-5">
         <div class="column-section">
-            <br/>
-            <br/>
+          <br />
+          <br />
           <div>
             <b-button type="is-danger" outlined @click="back">👈 Quay lại</b-button>
           </div>
           <br />
-          <product-card :product="product"></product-card>
+          <ProductCard :product="product"></ProductCard>
         </div>
       </div>
       <div class="column">
-            <br/>
-            <br/>
+        <br />
+        <br />
         <div class="column-section">
           <dashboard
+            v-if="product.Auctions !== undefined"
             :checkable="product.Auctions[0].auction_status === 1"
             title="⛏️ Lượt đấu giá"
             del_title="🗑️ Xóa lượt đấu giá"
@@ -63,7 +64,7 @@ export default {
       selected: [],
     };
   },
-  created() {
+  async mounted() {
     this.populatea(this.id);
   },
   computed: {
@@ -76,7 +77,7 @@ export default {
     ...mapActions("auction", ["populatea", "deletebs", "populatea", "closea"]),
 
     deleteBid(rows) {
-      this.deletebs(rows)
+      this.deletebs(rows);
     },
     back() {
       this.closea();

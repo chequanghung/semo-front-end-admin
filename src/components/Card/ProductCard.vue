@@ -4,9 +4,10 @@
     <!-- fruit -->
     <div class="cursor columns is-vcentered" v-if="product.Fruit !== undefined">
       <div class="column is-narrow" style="margin: 0">
-        <figure class="image is-32x32">
-          <img class="is-rounded" :src="product.Fruit.icon_url" :alt="product.Fruit.title" />
-        </figure>
+        <div
+          class="image-icon is-32x32 is-rounded"
+          :style="{backgroundImage: 'url(' + product.Fruit.icon_url + ')'}"
+        ></div>
       </div>
       <div class="column">
         <p class="sub-title" style="text-transform: uppercase;">{{ product.Fruit.title }}</p>
@@ -19,11 +20,16 @@
     <br />
 
     <!-- user -->
-    <div class="cursor columns is-vcentered" @click="$router.push({ name: 'UserView', params: { id: product.User.id }})" v-if="product.User !== undefined">
+    <div
+      class="cursor columns is-vcentered"
+      @click="$router.push({ name: 'UserView', params: { id: product.User.id }})"
+      v-if="product.User !== undefined"
+    >
       <div class="column is-narrow" style="margin: 0">
-        <figure class="image is-24x24">
-          <img class="is-rounded" :src="product.User.img_url"/>
-        </figure>
+        <div
+          class="image-icon"
+          :style="{backgroundImage: 'url(' + product.User.img_url + ')'}"
+        ></div>
       </div>
       <div class="column is-narrow">
         <p class="sub-title">{{ product.User.name }}</p>
@@ -48,7 +54,7 @@
       <div class="columns">
         <div class="column is-narrow" v-for="(medium, index) in product.ProductMedia" :key="index">
           <figure class="image is-128x128">
-            <img :src="medium.media_url" :alt="index" style="border-radius: 10px"/>
+            <img :src="medium.media_url" :alt="index" style="border-radius: 10px" />
           </figure>
         </div>
       </div>
@@ -170,15 +176,17 @@ export default {
   props: ["product"],
   data() {
     return {
-      date: '',
+      date: "",
     };
   },
   watch: {
-      product: function() {
-        if(this.product.Auctions !== undefined)
-          this.date = moment(this.product.Auctions[0].date_created).format("hh:mm DD/MM/YYYY")
-      }
-  }
+    product: function () {
+      if (this.product.Auctions !== undefined)
+        this.date = moment(this.product.Auctions[0].date_created).format(
+          "hh:mm DD/MM/YYYY"
+        );
+    },
+  },
 };
 </script>
 
@@ -196,6 +204,14 @@ export default {
   color: #01d28e;
   font-size: 24px;
   font-weight: 900;
+}
+
+.image-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
 }
 
 .title {
@@ -219,14 +235,15 @@ export default {
   height: 148px;
 }
 
-.cursor, .cursor p {
-    cursor: pointer;
-    transition: .25s;
+.cursor,
+.cursor p {
+  cursor: pointer;
+  transition: 0.25s;
 }
 
-.cursor:hover p{
-    color: #01d28e;
-    text-decoration: underline;
-    transition: .25s;
+.cursor:hover p {
+  color: #01d28e;
+  text-decoration: underline;
+  transition: 0.25s;
 }
 </style>

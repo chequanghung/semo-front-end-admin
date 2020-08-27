@@ -4,12 +4,12 @@
       :is_view="true"
       :checkable="true"
       title="🤝 Giao kèo"
-      del_title="🗑️ Xóa bản ghi"
-      :data="auctions"
+      del_title="🗑️ Hủy giao kèo"
+      :data="affairs"
       :columns="columns"
-      :total="auctions.length"
-      @delete="deleteAuction"
-      @into="intoAuction"
+      :total="affairs.length"
+      @delete="deleteAffair"
+      @into="intoAffair"
     ></dashboard>
   </div>
 </template>
@@ -25,30 +25,29 @@ export default {
     return {
       columns: [
         {
-          field: "id",
+          field: "product",
           label: "TÊN SẢN PHẨM",
           searchable: true,
           sortable: true,
         },
         {
-          field: "price_cur",
+          field: "seller",
           label: "NGƯỜI BÁN",
           searchable: true,
-          sortable: true,
         },
         {
-          field: "date_closure",
+          field: "buyer",
           label: "NGƯỜI MUA",
           searchable: true,
         },
         {
-          field: "auction_status",
+          field: "affair_status",
           label: "TRẠNG THÁI",
           searchable: true,
           sortable: true,
         },
         {
-          field: "auction_status",
+          field: "date_updated",
           label: "CẬP NHẬT CUỐI",
           searchable: true,
         },
@@ -56,23 +55,23 @@ export default {
       selected: [],
     };
   },
-  created() {
+  async mounted() {
     this.populate();
   },
   computed: {
     ...mapState({
-      auctions: (state) => state.auction.auctions,
+      affairs: (state) => state.affair.affairs,
     }),
   },
   methods: {
-    ...mapActions("auction", ["populate", "deletea", "populatea"]),
+    ...mapActions("affair", ["populate"]),
 
-    deleteAuction(rows) {
+    deleteAffair(rows) {
       this.deletea(rows);
     },
 
-    intoAuction(row) {
-      this.populatea(row);
+    intoAffair(row) {
+      this.$router.push({ name: 'AffairView', params: { id: row.id }})
     },
   },
 };

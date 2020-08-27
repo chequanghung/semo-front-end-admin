@@ -32,6 +32,7 @@ export default {
         {
           field: "price_cur",
           label: "GIÁ HIỆN TẠI",
+          searchable: true,
           sortable: true,
         },
         {
@@ -65,6 +66,7 @@ export default {
 
     intoAuction(row) {
       this.$router.push({ name: "AuctionView", params: { id: row.id } });
+      console.log(this.$router.params.id);
     },
   },
 };

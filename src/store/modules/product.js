@@ -59,7 +59,7 @@ export default {
         },
         // delete product from products
         deletes(state, products) {
-            state.products = state.products.filter(item => products.indexOf(item) < 0)
+            state.products = state.products.map(item => products.indexOf(item) >= 0 ? { ...item, product_status: "🗑️ ĐÃ XÓA" } : item)
         },
         // get product
         get(state, product) {
@@ -125,7 +125,6 @@ export default {
                 axios.post('/admin/reviewMedia', item)
                     .then(() => {
                         reviewMedia.push(item)
-                        // console.log('succeed')
                     })
                     .catch(error => {
                         Notification.open({
@@ -174,17 +173,22 @@ export default {
                 .then(() => {
                     commit('deletes', valid)
                     // succeed
-                    Notification.open({
-                        type: 'is-success',
-                        message: `Đã xóa thành công ${valid.length} sản phẩm.`
-                    })
+                    if (valid.length > 0) {
+                        Notification.open({
+                            type: 'is-success',
+                            message: `Đã xóa thành công ${valid.length} sản phẩm.`
+                        })
+                    }
                 })
         },
         deleteProducts: async ({ commit }, products) => {
             let deletedProducts = []
 
             await Promise.all(products.map(product => {
-                axios.delete(`/product/${product.id}`)
+                axios.put(`/product/changeStatus/`, {
+                    id: product.id,
+                    product_status: 9
+                })
                     .then(() => {
                         deletedProducts.push(product)
                     })

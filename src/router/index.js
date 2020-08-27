@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -37,6 +37,18 @@ Vue.use(VueRouter)
   {
     path: '/affair',
     component: () => import('../views/affair/AffairDashboard')
+  },
+  {
+    path: '/affair/:id',
+    name: 'AffairView',
+    props: true,
+    component: () => import('../views/affair/view/AffairView')
+  },
+  {
+    path: '/contract/:id',
+    name: 'ContractView',
+    props: true,
+    component: () => import('@/views/affair/view/AffairContractView')
   },
   {
     path: '/deposit',

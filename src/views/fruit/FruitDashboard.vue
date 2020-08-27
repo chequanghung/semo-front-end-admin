@@ -2,6 +2,7 @@
   <div class="page-container">
     <dashboard
       :is_view="true"
+      :checkable="true"
       title="🍑 Loại quả"
       del_title="🗑️ Xóa bản ghi"
       new_title="➕ Thêm quả mới"

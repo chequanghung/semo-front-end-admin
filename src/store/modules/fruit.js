@@ -40,7 +40,7 @@ export default {
         // get full data of fruit from the database
         populate({ commit }) {
             // get all fruits
-            axios.get(`/fruit/`).then(response => {
+            axios.get(`/fruit/dashboard`).then(response => {
                 commit('get', response.data)
             })
         },

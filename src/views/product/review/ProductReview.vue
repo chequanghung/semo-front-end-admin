@@ -11,7 +11,8 @@
             <p class="review-title">Kiểm duyệt sản phẩm</p>
           </div>
         </div>
-        <div class="column is-2"></div>
+        <div class="column is-2">
+        </div>
       </div>
     </div>
 
@@ -224,9 +225,11 @@
                     </div>
                     <!-- answer -->
                     <div class="column is-narrow">
-                      <figure class="image is-128x128" style="border-radius: 5px;">
-                        <img :src="medium.media_url" />
-                      </figure>
+                      <div
+                        class="image is-128x128"
+                        style="border-radius: 5px; overflow: hidden; background-size: cover; background-position: center; border: 1px solid #efefef;"
+                        :style="{backgroundImage: 'url(' + medium.media_url + ')'}"
+                      ></div>
                     </div>
                     <!-- commenter -->
                     <div class="column">
@@ -328,9 +331,11 @@ export default {
   watch: {
     product: function () {
       if (this.product !== undefined) {
-        this.product.ProductMedia.forEach((item) => {
-          this.edit_media = [...this.edit_media, { id: item.id, notes: "" }];
-        });
+        if (this.product.ProductMedia !== undefined) {
+          this.product.ProductMedia.forEach((item) => {
+            this.edit_media = [...this.edit_media, { id: item.id, notes: "" }];
+          });
+        }
       }
     },
   },

@@ -6,6 +6,7 @@ import fruit from './modules/fruit'
 import product from './modules/product'
 import auction from './modules/auction'
 import ui from './modules/ui'
+import affair from './modules/affair'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
     fruit: fruit,
     product: product,
     auction: auction,
-    ui: ui
+    ui: ui,
+    affair: affair,
   },
 
 
