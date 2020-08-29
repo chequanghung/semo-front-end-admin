@@ -28,7 +28,12 @@ export default {
         },
         // edit data
         edit(state, fruit) {
-            state.fruits = state.fruits.map(item => item.id === fruit.id ? fruit : item)
+            state.fruits = state.fruits.map(item => item.id === fruit.id ? {...item, title: fruit.title, icon_url: fruit.icon_url} : item)
+                // if (item.id === fruit.id) {
+                //     console.log('ok', item.title)
+                //     item.title = fruit.title
+                //     item.icon_url = fruit.icon_url
+                // }
         },
         // delete data
         delete(state, fruit) {
@@ -70,13 +75,9 @@ export default {
         },
         // edit data
         edit({ commit }, fruit) {
-            axios.put(`/fruit/`, fruit).then(response => {
-                commit('edit', {
-                    id: response.data.id,
-                    title: response.data.title,
-                    icon_url: response.data.icon_url,
-                    date_created: moment(response.data.date_created).format('HH:MM DD/MM/YYYY')
-                })
+            axios.put(`/fruit/`, fruit)
+            .then(() => {
+                commit('edit', fruit)
             })
                 .then(() => {
                     Notification.open({

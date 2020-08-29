@@ -7,6 +7,7 @@ import product from './modules/product'
 import auction from './modules/auction'
 import ui from './modules/ui'
 import affair from './modules/affair'
+import identity from './modules/identity'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     auction: auction,
     ui: ui,
     affair: affair,
+    identity: identity,
   },
 
 

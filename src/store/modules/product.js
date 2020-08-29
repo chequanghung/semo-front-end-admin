@@ -101,7 +101,7 @@ export default {
                             message: `${response.data.message}`,
                             type: 'is-success'
                         })
-                        commit('edits', review.id)
+                        commit('edit', review.id)
                         commit('close')
                         router.go(-1)
                     })
