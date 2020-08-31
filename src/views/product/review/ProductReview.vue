@@ -372,7 +372,9 @@ export default {
         item.notes.length === 0 ? { ...item, notes: null } : item
       );
 
-      this.review({ review, media });
+      this.review({ review, media }).then(() => {
+        this.$router.go(-1)
+      });
     },
   },
 };

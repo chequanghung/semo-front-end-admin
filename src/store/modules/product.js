@@ -3,8 +3,6 @@
 import axios from 'axios'
 import moment from 'moment'
 
-import router from '../../router'
-
 // buefy
 import { NotificationProgrammatic as Notification } from 'buefy'
 
@@ -103,12 +101,11 @@ export default {
                         })
                         commit('edit', review.id)
                         commit('close')
-                        router.go(-1)
                     })
                     .catch(error => {
                         // error box
                         Notification.open({
-                            message: `Không thể phê duyệt sản phẩm vì ${error.response.data.message}.`,
+                            message: `Không thể phê duyệt sản phẩm vì ${error.data.message}.`,
                             type: 'is-danger'
                         })
                     })
