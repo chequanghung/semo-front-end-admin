@@ -41,7 +41,7 @@ export default {
           label: "TÊN SẢN PHẨM",
           searchable: true,
           sortable: true,
-          width: '800',
+          width: '600',
         },
         {
           field: "fruit_title",

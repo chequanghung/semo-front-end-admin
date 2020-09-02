@@ -127,9 +127,10 @@ export default {
       this.openMenu = this.menu;
     },
   },
-  created() {
+  async mounted() {
     this.openMenu = this.menu;
-    // this.checkRouterPathForMenuIndex();
+
+    this.getUserByToken()
   },
   data() {
     return {
@@ -154,6 +155,18 @@ export default {
   },
   methods: {
     ...mapActions("ui", ["open_menu", "close_menu"]),
+
+    getUserByToken() {
+      if (localStorage.getItem('admin_token') !== null) {
+        this.$store.dispatch('geta')
+        .catch(error => {
+          this.$buefy.toast.open({
+            type: 'is-danger',
+            message: `${error.response.data.message}`
+          })
+        })
+      }
+    },
   },
 };
 </script>
@@ -163,7 +176,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Roboto:wght@400;500;700;900&display=swap");
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
@@ -181,6 +194,14 @@ export default {
       color: #42b983;
     }
   }
+}
+
+.home-section-title {
+  font-weight: 900;
+  font-size: 24px;
+  color: #b88cd8;
+  text-align: left;
+  margin-bottom: 16px;
 }
 
 .page-container {
