@@ -184,6 +184,7 @@ export default {
 }
 
 #nav {
+  font-family: "Roboto";
   padding: 30px;
 
   a {
@@ -202,6 +203,7 @@ export default {
   color: #b88cd8;
   text-align: left;
   margin-bottom: 16px;
+  font-family: "Roboto";
 }
 
 .page-container {

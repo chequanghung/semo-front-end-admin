@@ -9,7 +9,25 @@
             <b-button type="is-danger" outlined @click="back">👈 Quay lại</b-button>
           </div>
           <br />
-          <ProductCard :product="affair.Product"></ProductCard>
+          <div class="tile is-ancestor">
+            <div class="tile is-vertical is-parent">
+              <div class="tile is-child box" v-if="affair.buyer !== undefined">
+                <p class="home-section-title">🛒 Người mua</p>
+                <div class="columns is-mobile is-vcentered">
+                  <div class="column is-narrow">
+                    <div
+                      :style="{backgroundImage: 'url(' + affair.buyer.img_url + ')'}"
+                      style="border-radius: 50%; width: 48px; height: 48px; background-size: cover; background-position: center"
+                    ></div>
+                  </div>
+                  <div class="column">
+                    <p class="home-section-title" style="margin-bottom: 0">{{ affair.buyer.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ProductCard :affair="affair" :product="affair.Product"></ProductCard>
           <br />
         </div>
       </div>
@@ -18,24 +36,23 @@
         <br />
         <!-- status and contract -->
         <div class="columns is-mobile is-multiline" style="height: fit-content;">
-          <!-- status -->
-          <div class="column is-7">
-            <Card title="⚠️ Lưu ý">
-              <template v-slot:content>
-                <br/>
-                <div class="columns is-centered is-vcentered">
-                  <p>Không có gì đáng chú ý.</p>
+          <div class="tile is-ancestor">
+            <div class="tile is-vertical is-parent">
+              <!-- status -->
+              <div class="tile is-child box">
+                <div class="column is-7">
+                  <p class="home-section-title">⚠️ Lưu ý</p>
                 </div>
-              </template>
-            </Card>
-          </div>
-          <!-- contract -->
-          <div class="column is-5">
-            <Card title="📋 Hợp đồng">
-              <template v-slot:content>
-                <AffairContractCard :contract="affair.AffairContract" @click="intoContract"></AffairContractCard>
-              </template>
-            </Card>
+              </div>
+            </div>
+            <!-- contract -->
+            <div class="column is-5">
+              <Card title="📋 Hợp đồng">
+                <template v-slot:content>
+                  <AffairContractCard :contract="affair.AffairContract" @click="intoContract"></AffairContractCard>
+                </template>
+              </Card>
+            </div>
           </div>
           <!-- chats -->
           <div class="column is-full">
@@ -83,8 +100,11 @@ export default {
       this.$router.go(-1);
     },
     intoContract() {
-      this.$router.push({ name: 'ContractView', params: { id: this.contract.id } })
-    }
+      this.$router.push({
+        name: "ContractView",
+        params: { id: this.contract.id },
+      });
+    },
   },
   async mounted() {
     this.populatea(this.id);

@@ -33,7 +33,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_title ? 'is-danger' : ''">
+              <b-field :type="edit_title ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_title" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -63,7 +63,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_fruit ? 'is-danger' : ''">
+              <b-field :type="edit_fruit ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_fruit" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -76,7 +76,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_weight ? 'is-danger' : ''">
+              <b-field :type="edit_weight ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_weight" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -94,7 +94,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_address ? 'is-danger' : ''">
+              <b-field :type="edit_address ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_address" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -119,7 +119,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_fruit_pct ? 'is-danger' : ''">
+              <b-field :type="edit_fruit_pct ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_fruit_pct" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -136,7 +136,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_sugar_pct ? 'is-danger' : ''">
+              <b-field :type="edit_sugar_pct ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_sugar_pct" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -156,7 +156,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_weight_avg ? 'is-danger' : ''">
+              <b-field :type="edit_weight_avg ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_weight_avg" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -176,7 +176,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_diameter_avg ? 'is-danger' : ''">
+              <b-field :type="edit_diameter_avg ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input
                   v-model="edit_diameter_avg"
                   placeholder="Góp ý ..."
@@ -198,7 +198,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_notes ? 'is-danger' : ''">
+              <b-field :type="edit_notes ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_notes" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -235,7 +235,7 @@
                     <div class="column">
                       <p style="font-size: 15px;" :class="{'edited' : edit_media[i].notes}">Ảnh</p>
                       <br />
-                      <b-field :type="edit_media[i].notes ? 'is-danger' : ''">
+                      <b-field :type="edit_media[i].notes ? 'is-danger' : ''" v-if="product.product_status === 1">
                         <b-input
                           v-model="edit_media[i].notes"
                           placeholder="Góp ý ..."
@@ -264,7 +264,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_price_init ? 'is-danger' : ''">
+              <b-field :type="edit_price_init ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_price_init" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -279,7 +279,7 @@
               </div>
               <!-- commenter -->
               <br />
-              <b-field :type="edit_price_step ? 'is-danger' : ''">
+              <b-field :type="edit_price_step ? 'is-danger' : ''" v-if="product.product_status === 1">
                 <b-input v-model="edit_price_step" placeholder="Góp ý ..." maxlength="255" expanded></b-input>
               </b-field>
             </div>
@@ -290,6 +290,7 @@
             <div class="page-section">
               <div class="columns is-centered">
                 <b-button
+                  v-if="product.product_status === 1"
                   type="is-green"
                   size="is-medium"
                   native-type="submit"

@@ -47,7 +47,7 @@ export default {
   top: 0px;
   z-index: 1;
   background-color: #fcfcfc89;
-  /* backdrop-filter: saturate(180%) blur(20px); */
+  backdrop-filter: saturate(180%) blur(20px);
   transition: 0.12s;
 }
 </style>

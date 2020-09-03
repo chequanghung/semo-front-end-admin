@@ -87,6 +87,7 @@ export default {
       this.delete(rows);
     },
     intoProduct(row) {
+      if (row.product_status === '⚠️ CẦN CHỈNH SỬA' || row.product_status === '⏲️ CHỜ KIỂM DUYỆT' || row.product_status === '✅ ĐÃ KIỂM DUYỆT')
       this.$router.push({ name: "ProductReview", params: { id: row.id } });
     },
   },

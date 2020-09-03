@@ -5,18 +5,15 @@
     <div
       class="cursor columns is-vcentered"
       v-if="product.Fruit !== undefined"
+      @click="$router.push({ name: 'FruitView', params: { id: product.Fruit.id } })"
     >
-      <div class="column is-narrow" style="margin: 0"
-      v-if="product.Fruit !== undefined"
-      >
+      <div class="column is-narrow" style="margin: 0">
         <div
           class="image-icon is-32x32 is-rounded"
           :style="{backgroundImage: 'url(' + product.Fruit.icon_url + ')'}"
         ></div>
       </div>
-      <div class="column"
-      v-if="product.Fruit !== undefined"
-      >
+      <div class="column">
         <p class="sub-title" style="text-transform: uppercase;">{{ product.Fruit.title }}</p>
       </div>
     </div>
@@ -29,6 +26,7 @@
     <!-- user -->
     <div
       class="cursor columns is-vcentered is-mobile"
+      @click="$router.push({ name: 'UserView', params: { id: product.User.id }})"
       v-if="product"
     >
       <div class="column is-narrow" style="margin: 0">

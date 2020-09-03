@@ -288,13 +288,9 @@ export default {
       this.admin = this.$store.state.admin;
     }
 
-    if (Object.keys(this.$store.state.home).length === 0) {
       this.$store.dispatch("geth").then(() => {
         this.home = this.$store.state.home;
       });
-    } else {
-      this.home = this.$store.state.home;
-    }
   },
 };
 </script>

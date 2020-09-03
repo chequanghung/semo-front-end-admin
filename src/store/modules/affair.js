@@ -15,6 +15,8 @@ export default {
         chats: [],
         // contract
         contract: {},
+        // updates
+        updates: []
     },
 
 
@@ -23,7 +25,8 @@ export default {
         affair: state => state.affair,
         deposits: state => state.deposits,
         chats: state => state.chats,
-        contract: state => state.contract
+        contract: state => state.contract,
+        updates: state => state.updates,
     },
 
 
@@ -47,25 +50,27 @@ export default {
                     }
                 })
         },
-        // get affair
+        // populate
         geta: (state, affair) => {
             state.affair = affair
         },
-        // get deposits
-        getd: (state, deposits) => {
-            state.deposits = deposits
+        getp: (state, product) => {
+            state.product = product
         },
-        // get chats
-        getch: (state, chats) => {
-            state.chats = chats
-        },
-        // get and edit contract
         getc: (state, contract) => {
             state.contract = contract
         },
-        // add chats
-        addch: (state, chats) => {
-            state.chats = [...state.chats, chats]
+        // get contract update
+        getu: (state, update) => {
+            state.update = update
+        },
+        // edit contract
+        editc: (state, contract) => {
+            state.contract = contract
+        },
+        // clear update
+        clearu: (state) => {
+            state.update = {}
         },
     },
 
@@ -85,6 +90,24 @@ export default {
             .then(({ data }) => {
                 commit('geta', data)
             })
-        }
+        },
+        // get chats
+        getcs: async ({ state, commit }) => {
+            return axios.get(`/affair/chat/${state.affair.id}`)
+                .then(({ data }) => {
+                    commit('addcs', data)
+                })
+        },
+        // delete affair
+        deletea: async ({ dispatch }, contract) => {
+            return axios.put(`/affair/cancel`, {
+                id: contract.affair_id,
+                affair_status: 9
+            })
+            .then(() => {
+                dispatch('clear')
+                dispatch('close')
+            })
+        },
     }
 }

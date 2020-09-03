@@ -49,7 +49,7 @@
         <div class="column is-narrow" v-if="data !== undefined">
           <b-button
             type="is-green"
-            :disabled="this.data.title === this.fruit_title && this.data.icon_url === this.fruit_icon_url"
+            :disabled="this.data.title === this.fruit_title && this.data.icon_url === this.fruit_icon_url || this.fruit_title === ''"
             @click="editFruit"
           >💾 Lưu lại</b-button>
         </div>
