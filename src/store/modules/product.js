@@ -125,7 +125,7 @@ export default {
                     })
                     .catch(error => {
                         Notification.open({
-                            message: `Không phê duyệt được ảnh vì ${error.response.data.message}`,
+                            message: `Không phê duyệt được ảnh vì ${error.data.message}`,
                             type: 'is-danger'
                         })
                     })

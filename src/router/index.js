@@ -90,6 +90,13 @@ const routes = [
     },
   },
   {
+    path: '/transaction_request',
+    component: () => import('../views/transaction/TransactionUpdateDashboard'),
+    meta: {
+      requiresAuth: true
+    },
+  },
+  {
     path: '/user',
     component: () => import('../views/user/UserDashboard'),
     meta: {

@@ -59,7 +59,13 @@
                   :active="this.$route.fullPath === '/deposit'"
                   tag="router-link"
                   to="/deposit"
-                  label="💵 Giao dịch"
+                  label="💵 Đặt cọc"
+                ></b-menu-item>
+                <b-menu-item
+                  :active="this.$route.fullPath === '/transaction_request'"
+                  tag="router-link"
+                  to="/transaction_request"
+                  label="💵 Nạp tiền"
                 ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="NGƯỜI DÙNG">
@@ -162,8 +168,10 @@ export default {
         .catch(error => {
           this.$buefy.toast.open({
             type: 'is-danger',
-            message: `${error.response.data.message}`
+            message: `${error.data.message}`
           })
+
+          localStorage.clear()
         })
       }
     },

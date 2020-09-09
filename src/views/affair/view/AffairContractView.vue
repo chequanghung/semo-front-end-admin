@@ -11,47 +11,26 @@
         <div class="tile is-child box">
           <p class="home-section-title">🗃️ Điều khoản</p>
           <!-- statements -->
-          <p style="text-align: center;">Nhấp vào điều khoản để chỉnh sửa</p>
           <br />
-          <b-notification type="is-warning" v-if="updateMode === 'MERGE'">
-            <strong>💡 Đối tác của bạn vừa yêu cầu cập nhật hợp đồng. Cùng nhau trao đổi và chỉnh sửa hợp đồng nhé!</strong>
-          </b-notification>
-          <AffairContractStatementList
-            :updateMode="updateMode"
-            @change="changeContractAttr"
-            @update="changeUpdateMode"
-          ></AffairContractStatementList>
-          <!-- submit -->
-          <br />
-          <div class="columns is-centered is-mobile">
-            <div class="column is-narrow">
-              <b-button
-                type="is-green"
-                @click="editContract"
-                :disabled="isDisabled"
-                :loading="isLoading"
-                v-if="updateMode === 'CREATE'"
-              >✈️ Yêu cầu sửa hợp đồng</b-button>
-            </div>
-          </div>
+          <AffairContractStatementList :updateMode="updateMode" :columns="columns"></AffairContractStatementList>
         </div>
       </div>
     </div>
-    <div class="tile is-child box is-narrow">
-      <div class="columns is-mobile is-vcentered">
-        <div class="column">
-          <p style="font-size: 18px; font-weight: 900; color: #b88cd8">⚙️ Chức năng</p>
-        </div>
-        <div class="column is-narrow">
-          <b-button type="is-danger" @click="cancel">❌ Hủy hợp đồng</b-button>
-        </div>
-      </div>
-    </div>
+
+    <hr />
+
+    <p class="home-section-title">⏫ Cập nhật gửi đi</p>
+    <b-table :data="records" :columns="columns"></b-table>
+
+    <hr />
+
+    <b-loading v-model="isLoading" is-full-page></b-loading>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import moment from "moment";
 // import AffairContractStatementList from "@/components/Affair/AffairContractStatementList";
 
 export default {
@@ -62,8 +41,7 @@ export default {
   computed: {
     ...mapState({
       contract: (state) => state.affair.contract,
-      update: (state) => state.affair.update,
-      user: (state) => state.user.user,
+      updates: (state) => state.affair.updates,
     }),
     isDisabled: function () {
       if (this.compare(this.contract) === true || this.isLoading === true) {
@@ -72,41 +50,57 @@ export default {
         return false;
       }
     },
-    updateMode: function () {
-      // console.log(Object.keys(this.update).length === 0)
-      // if there is no update for this contract yet
-      if (Object.keys(this.update).length === 0) {
-        // create mode
-        return "CREATE";
-      }
-      // if there is update
-      else {
-        // if there is a later update
-        if (this.contract.date_updated < this.update.date_updated) {
-          // if the update is yours
-          if (this.update.change_user_id === this.user.id) {
-            return "PENDING";
-          }
-          // if it is not yours
-          else {
-            return "MERGE";
-          }
-        }
-        // if the contract is ahead of the update
-        else {
-          return "CREATE";
-        }
-      }
-    },
   },
   data() {
     return {
       cont: {},
       isLoading: false,
+      updateMode: "PENDING",
+      columns: [
+        {
+          field: "shipment_user",
+          label: "NGƯỜI VẬN CHUYỂN",
+        },
+        {
+          field: "shipment_date",
+          label: "NGÀY VẬN CHUYỂN",
+        },
+        {
+          field: "shipment_late_fee",
+          label: "PHÍ VẬN CHUYỂN",
+        },
+        {
+          field: "payment_date",
+          label: "NGÀY THANH TOÁN",
+        },
+        {
+          field: "payment_late_fee",
+          label: "PHÍ THANH TOÁN CHẬM",
+        },
+        {
+          field: "preservative_amount",
+          label: "NỒNG ĐỘ BẢO QUẢN (%)",
+        },
+        {
+          field: "change_user",
+          label: "NGƯỜI THAY ĐỔI",
+        },
+        {
+          field: "date_updated",
+        },
+      ],
+      records: [],
     };
   },
   methods: {
-    ...mapActions("affair", ["getc", "editc", "clear", "close", "deletea"]),
+    ...mapActions("affair", [
+      "getc",
+      "editc",
+      "clear",
+      "close",
+      "deletea",
+      "getus",
+    ]),
 
     back() {
       this.clear();
@@ -171,33 +165,31 @@ export default {
           });
         });
     },
-    // submit change on contract object
-    changeContractAttr(contract_edit) {
-      this.cont.shipment_user_id = contract_edit.shipment_user_id;
-      this.cont.shipment_date = contract_edit.shipment_date;
-      this.cont.shipment_late_fee = contract_edit.shipment_late_fee;
-      this.cont.payment_date = contract_edit.payment_date;
-      this.cont.payment_late_fee = contract_edit.payment_late_fee;
-      this.cont.preservative_amount = contract_edit.preservative_amount;
-    },
-    // compare cont with contract in the db
-    compare(object) {
-      if (
-        this.cont.shipment_user_id === object.shipment_user_id &&
-        this.cont.shipment_date === object.shipment_date &&
-        this.cont.shipment_late_fee === object.shipment_late_fee &&
-        this.cont.payment_date === object.payment_date &&
-        this.cont.payment_late_fee === object.payment_late_fee &&
-        this.cont.preservative_amount === object.preservative_amount
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
   async mounted() {
+    this.isLoading = true;
+
     this.getc(this.$route.params.id).then(() => {
+      this.getus(this.$route.params.id)
+        .then(() => {
+          this.records = this.updates.map((item) => {
+            return {
+              ...item,
+              shipment_late_fee: new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(item.shipment_late_fee),
+              payment_late_fee: new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(item.payment_late_fee),
+              date_updated: moment(item.date_updated).format(
+                "HH:mm DD-MM-YYYY"
+              ),
+            };
+          });
+          this.isLoading = false;
+        })
       // bind data from contractinto cont
       this.cont = {
         affair_contract_id: this.contract.id,
@@ -207,7 +199,6 @@ export default {
         payment_date: this.contract.payment_date,
         payment_late_fee: this.contract.payment_late_fee,
         preservative_amount: this.contract.preservative_amount,
-        change_user_id: this.user.id,
       };
     });
   },

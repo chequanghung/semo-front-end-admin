@@ -3,7 +3,7 @@
     <div class="column is-full">
       <br />
       <p class="section-title">THAY ĐỔI LẦN CUỐI</p>
-      <p class="section-content">{{ contract.date_updated }}</p>
+      <p class="section-content" v-if="contract !== undefined">{{ formatDate(contract.date_updated) }}</p>
     </div>
     <div class="column"></div>
     <div class="column is-narrow">
@@ -13,12 +13,18 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   props: ["contract"],
   methods: {
     intoContract() {
       this.$emit('click')
     },
+
+    formatDate(date) {
+      return moment(date).format('HH:ss DD/MM/YYYY')
+    }
   },
 };
 </script>

@@ -14,6 +14,8 @@
       @into="intoFruit"
     ></dashboard>
 
+    <b-loading is-full-page v-model="isLoading"></b-loading>
+
     <!-- modals -->
     <!-- new modal -->
     <b-modal :active.sync="isNewModal" trap-focus destroy-on-hide can-cancel style="width: auto">
@@ -76,10 +78,16 @@ export default {
       selected: {},
       isEditModal: false,
       isNewModal: false,
+      isLoading: false
     };
   },
   created() {
-    this.populate();
+    this.isLoading = true
+
+    this.populate()
+    .then(() => {
+      this.isLoading = false
+    });
   },
   computed: {
     ...mapState({

@@ -1,10 +1,10 @@
 <template>
   <div class="cell-container" :class="{'uneditable': uneditable, 'editing': editMode}">
     <div class="columns is-vcentered is-mobile">
-      <div class="column" @click="edit">
+      <div class="column">
         <p class="cell-content">{{ title }}</p>
       </div>
-      <div class="column is-narrow" v-if="editMode === false" @click="edit">
+      <div class="column is-narrow" v-if="editMode === false">
         <!-- content -->
         <!-- money -->
         <p
@@ -38,29 +38,6 @@
           </div>
           <div class="column is-narrow">
             <p class="cell-content" v-if="user">{{ user.name }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="column" v-if="editMode === true">
-        <div class="columns">
-          <div class="column">
-            <b-field v-if="money !== undefined">
-              <b-input v-model="moneyEdit" type="number" :min="min" :max="max" expanded></b-input>
-            </b-field>
-            <b-field v-if="percent !== undefined">
-              <b-input v-model="percentEdit" type="number" :min="min" :max="max" expanded></b-input>
-            </b-field>
-            <b-field v-if="date !== undefined">
-              <b-datepicker locale="en-GB" v-model="dateEdit" expanded></b-datepicker>
-            </b-field>
-            <b-field v-if="user !== undefined">
-              <b-select v-model="userEdit" expanded>
-                <option v-for="item in users" :key="item.id" :value="item">{{ item.name }}</option>
-              </b-select>
-            </b-field>
-          </div>
-          <div class="column is-narrow">
-            <b-button @click="submit" :disabled="isDisabled" expanded>🖊️ Xong</b-button>
           </div>
         </div>
       </div>
@@ -128,35 +105,6 @@ export default {
     this.user !== undefined ? (this.userEdit = this.user) : "";
   },
   methods: {
-    edit() {
-      this.uneditable ? "" : (this.editMode = !this.editMode);
-    },
-    submit() {
-      // check type
-      if (this.date !== undefined) {
-        this.submitDate();
-      } else if (this.percent !== undefined) {
-        this.submitPercent();
-      } else if (this.money !== undefined) {
-        this.submitMoney();
-      } else if (this.user !== undefined) {
-        this.submitUser();
-      }
-      // turn off edit mode
-      this.editMode = false;
-    },
-    submitDate() {
-      this.$emit("changeDate", this.dateEdit);
-    },
-    submitMoney() {
-      this.$emit("changeMoney", this.moneyEdit);
-    },
-    submitUser() {
-      this.$emit("changeUser", this.userEdit);
-    },
-    submitPercent() {
-      this.$emit("changePercent", this.percentEdit);
-    },
     formatCurrency: function (content) {
       return new Intl.NumberFormat("vi-VN", {
         style: "currency",

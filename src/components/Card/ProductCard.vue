@@ -3,7 +3,7 @@
   <div class="card-container tile is-child box">
     <!-- fruit -->
     <div
-      class="cursor columns is-vcentered"
+      class="cursor columns is-vcentered is-mobile"
       v-if="product.Fruit !== undefined"
     >
       <div class="column is-narrow" style="margin: 0"
@@ -183,7 +183,7 @@ export default {
   },
   computed: {
     date: function () {
-      return moment(this.affair.date_created).format("hh:mm DD/MM/YYYY");
+      return moment(this.product.date_created).format("hh:mm DD/MM/YYYY");
     },
   },
 };

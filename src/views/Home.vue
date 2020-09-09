@@ -3,8 +3,8 @@
     <page-title class="title-bar" title="👋 Chào mừng bạn đã trở lại!">
       <template v-slot:page-function>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <p class="title" style="margin-bottom: 0; margin-right: 16px;">{{ admin.name }}</p>
-            <b-button type="is-danger is-light" @click="logout">🚪 Đăng xuất</b-button>
+          <p class="title" style="margin-bottom: 0; margin-right: 16px;">{{ admin.name }}</p>
+          <b-button type="is-danger is-light" @click="logout">🚪 Đăng xuất</b-button>
         </div>
       </template>
     </page-title>
@@ -253,13 +253,13 @@
         </div>
       </div>
     </div>
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+
+    <b-loading is-full-page v-model="isLoading"></b-loading>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
@@ -267,13 +267,14 @@ export default {
     PageTitle: () => import("@/components/PageTitle"),
   },
   computed: {
-    ...mapState ({
-      admin: state => state.admin,
-    })
+    ...mapState({
+      admin: (state) => state.admin,
+    }),
   },
   data() {
     return {
       home: {},
+      isLoading: true,
       // admin: {},
     };
   },
@@ -288,9 +289,13 @@ export default {
       this.admin = this.$store.state.admin;
     }
 
-      this.$store.dispatch("geth").then(() => {
-        this.home = this.$store.state.home;
-      });
+    this.isLoading = true
+
+    this.$store.dispatch("geth")
+    .then(() => {
+      this.home = this.$store.state.home;
+      this.isLoading = false
+    })
   },
 };
 </script>

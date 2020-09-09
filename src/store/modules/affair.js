@@ -16,7 +16,8 @@ export default {
         // contract
         contract: {},
         // updates
-        updates: []
+        updates: [],
+        product: {}
     },
 
 
@@ -27,6 +28,7 @@ export default {
         chats: state => state.chats,
         contract: state => state.contract,
         updates: state => state.updates,
+        product: state => state.product,
     },
 
 
@@ -61,8 +63,25 @@ export default {
             state.contract = contract
         },
         // get contract update
-        getu: (state, update) => {
-            state.update = update
+        getus: (state, updates) => {
+            state.updates = updates
+        },
+        // add chat
+        addcs: (state, dialogues) => {
+            let ids = state.chats.map(item => item.id)
+
+            dialogues.forEach(item => {
+                if(ids.indexOf(item.id) === -1) {
+                    state.chats.push(item)
+                }
+            })
+
+            state.chats.sort(function (a, b) {
+                let x = a.date_created
+                let y = b.date_created
+
+                return x < y ? -1 : (x === y ? 0 : 1)
+            })
         },
         // edit contract
         editc: (state, contract) => {
@@ -70,8 +89,17 @@ export default {
         },
         // clear update
         clearu: (state) => {
-            state.update = {}
+            state.updates = []
         },
+        clear: (state) => {
+            state.contract = {}
+            state.updates = []
+        },
+        close: (state) => {
+            state.affair = {}
+            state.product = {}
+            state.chats = []
+        }
     },
 
 
@@ -88,7 +116,11 @@ export default {
         populatea: async ({ commit }, id) => {
             return axios.get(`/affair/id/${id}`)
             .then(({ data }) => {
-                commit('geta', data)
+                let affair = data
+
+                    commit('geta', affair)
+                    commit('getp', affair.Product)
+                    commit('getc', affair.AffairContract)
             })
         },
         // get chats
@@ -98,16 +130,37 @@ export default {
                     commit('addcs', data)
                 })
         },
-        // delete affair
-        deletea: async ({ dispatch }, contract) => {
-            return axios.put(`/affair/cancel`, {
-                id: contract.affair_id,
-                affair_status: 9
-            })
-            .then(() => {
-                dispatch('clear')
-                dispatch('close')
+        // get contract
+        getc: async ({ commit }, id) => {
+            return axios.get(`/affair/contract/id/${id}`)
+                .then(({ data }) => {
+                    commit('getc', data)
+                })
+        },
+        // get updates
+        getus: async ({ commit }, id) => {
+            return axios.get(`/admin/contract/${id}/updates`)
+            .then(({ data }) => {
+                commit('getus', data)
             })
         },
+        // delete affair
+        deleteas: async ({ dispatch }, contracts) => {
+            Promise.all(contracts.map(item => {
+                return axios.put(`/affair/cancel`, {
+                    id: item.id,
+                    affair_status: 9
+                })
+                .then(() => {
+                    dispatch('populate')
+                })
+            }))
+        },
+        close: async ({ commit }) => {
+            commit('close')
+        },
+        clear: async ({ commit }) => {
+            commit('clear')
+        }
     }
 }

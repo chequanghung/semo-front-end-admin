@@ -64,10 +64,22 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("affair", ["populate"]),
+    ...mapActions("affair", ["populate", "deleteas"]),
 
     deleteAffair(rows) {
-      this.deletea(rows);
+      this.deleteas(rows)
+      .then(() => {
+        this.$buefy.notification.open({
+          type: 'is-success',
+          message: 'Đã xóa thành công các buổi đấu giá.'
+        })
+      })
+      .catch(() => {
+        this.$buefy.notification.open({
+          type: 'is-danger',
+          message: 'Đã có lỗi xảy ra.'
+        })
+      })
     },
 
     intoAffair(row) {

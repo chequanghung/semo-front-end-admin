@@ -14,7 +14,7 @@ Vue.use(Buefy)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-axios.defaults.baseURL = "http://localhost:3003/"
+axios.defaults.baseURL = "http://localhost:3003"
 Vue.use(VueAxios, axios)
 
 // firebase

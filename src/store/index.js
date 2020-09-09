@@ -9,6 +9,7 @@ import auction from './modules/auction'
 import ui from './modules/ui'
 import affair from './modules/affair'
 import identity from './modules/identity'
+import transaction from './modules/transaction'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     ui: ui,
     affair: affair,
     identity: identity,
+    transaction: transaction,
   },
 
 

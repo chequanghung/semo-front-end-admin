@@ -12,6 +12,7 @@
       @into="intoProduct"
     ></dashboard>
 
+
     <!-- modals -->
     <b-modal :active.sync="isModal" trap-focus destroy-on-hide can-cancel style="width: auto">
       <fruit-modal
@@ -21,6 +22,8 @@
         :data="selected"
       ></fruit-modal>
     </b-modal>
+    
+    <b-loading is-full-page v-model="isLoading"></b-loading>
   </div>
 </template>
 
@@ -28,10 +31,9 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "Fruit",
+  name: "Product",
   components: {
     Dashboard: () => import("../../components/Dashboard"),
-    FruitModal: () => import("../../components/Modal/FruitModal"),
   },
   data() {
     return {
@@ -68,9 +70,10 @@ export default {
       total: 0,
       selected: {},
       isModal: false,
+      isLoading: true,
     };
   },
-  mounted() {
+  async mounted() {
     // setInterval(() => {
     this.populates();
     // }, 15000)
