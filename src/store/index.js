@@ -10,6 +10,7 @@ import ui from './modules/ui'
 import affair from './modules/affair'
 import identity from './modules/identity'
 import transaction from './modules/transaction'
+import deposit from './modules/deposit'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     affair: affair,
     identity: identity,
     transaction: transaction,
+    deposit: deposit,
   },
 
 

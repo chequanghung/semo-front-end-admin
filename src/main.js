@@ -15,6 +15,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 axios.defaults.baseURL = "http://localhost:3003"
+// axios.defaults.baseURL = "https://project-zero-on-air.herokuapp.com/"
 Vue.use(VueAxios, axios)
 
 // firebase

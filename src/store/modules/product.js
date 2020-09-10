@@ -47,7 +47,7 @@ export default {
                             return { ...item, product_status: "💰 ĐÃ BÁN" }
 
                         case 9:
-                            return { ...item, product_status: "🗑️ ĐÃ XÓA" }
+                            return { ...item, product_status: "🗑️ ĐÃ HUỶ" }
                     }
                 })
         },

@@ -275,7 +275,6 @@ export default {
     return {
       home: {},
       isLoading: true,
-      // admin: {},
     };
   },
   methods: {
@@ -285,12 +284,8 @@ export default {
     },
   },
   async mounted() {
-    if (Object.keys(this.$store.state.admin).length === 0) {
-      this.admin = this.$store.state.admin;
-    }
-
     this.isLoading = true
-
+// loading lâu
     this.$store.dispatch("geth")
     .then(() => {
       this.home = this.$store.state.home;

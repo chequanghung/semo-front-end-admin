@@ -141,19 +141,6 @@
               </div>
             </div>
           </div>
-          <!-- functions -->
-          <div class="column">
-            <Card title>
-              <template v-slot:content>
-                <div class="columns">
-                  <div class="column"></div>
-                  <div class="column is-narrow">
-                    <b-button type="is-danger">🗑️ Xóa giao kèo</b-button>
-                  </div>
-                </div>
-              </template>
-            </Card>
-          </div>
         </div>
       </div>
     </div>
@@ -169,7 +156,6 @@ export default {
   props: ["id"],
   components: {
     ProductCard: () => import("@/components/Card/ProductCard"),
-    Card: () => import("@/components/Card/Card"),
   },
   data() {
     return {

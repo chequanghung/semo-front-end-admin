@@ -59,7 +59,7 @@
                   :active="this.$route.fullPath === '/deposit'"
                   tag="router-link"
                   to="/deposit"
-                  label="💵 Đặt cọc"
+                  label="💴 Đặt cọc"
                 ></b-menu-item>
                 <b-menu-item
                   :active="this.$route.fullPath === '/transaction_request'"
@@ -70,32 +70,10 @@
               </b-menu-list>
               <b-menu-list label="NGƯỜI DÙNG">
                 <b-menu-item
-                  :active="this.$route.fullPath === '/user'"
-                  tag="router-link"
-                  to="/user"
-                  label="🙋‍♀️ Người dùng"
-                ></b-menu-item>
-                <b-menu-item
                   :active="this.$route.fullPath === '/identity'"
                   tag="router-link"
                   to="/identity"
                   label="🎫 Xác thực"
-                ></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="NỘI BỘ">
-                <b-menu-item
-                  :active="this.$route.fullPath === '/admin'"
-                  tag="router-link"
-                  to="/admin"
-                  label="💁‍♂️ Quản trị viên"
-                ></b-menu-item>
-              </b-menu-list>
-              <b-menu-list label="BẠN">
-                <b-menu-item
-                  :active="this.$route.fullPath === '/you'"
-                  tag="router-link"
-                  to="/you"
-                  label="😊 Tài khoản của bạn"
                 ></b-menu-item>
               </b-menu-list>
             </div>
